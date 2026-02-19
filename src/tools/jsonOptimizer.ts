@@ -8,18 +8,22 @@ const formatAndDeduplicateJSON = (input: string): string => {
       parsed,
       (key, value) => {
         if (Array.isArray(value)) {
-          return value.filter((item) => {
+          return value.filter((item: any) => {
             const serialized = JSON.stringify(item);
-            return seen.has(serialized) ? false : seen.add(serialized);
+            if (!seen.has(serialized)) {
+              seen.add(serialized);
+              return true;
+            }
+            return false;
           });
         }
         return value;
       },
-      2 // Formatting spacing
+      2 // Pretty print JSON
     );
     return deduplicated;
   } catch (error) {
-    throw new Error('Invalid JSON syntax');
+    return 'Invalid JSON syntax';
   }
 };
 
@@ -30,38 +34,30 @@ const JSONOptimizer: React.FC = () => {
 
   const handleOptimize = () => {
     try {
+      setError('');
       const result = formatAndDeduplicateJSON(input);
       setOutput(result);
-      setError('');
     } catch (err: any) {
-      setError(err.message);
+      setError('Could not process JSON. Please check your input.');
       setOutput('');
     }
   };
 
   return (
-    <div style={{ color: '#f1f5f9', padding: '1rem' }}>
+    <div style={{ padding: '16px', color: 'white' }}>
       <h2>JSON Optimizer</h2>
       <textarea
-        placeholder="Paste your JSON here..."
+        rows={10}
+        placeholder="Paste JSON here..."
         value={input}
-        onChange={(e) => setInput(e.target.value)}
-        style={{ width: '100%', height: '150px', marginBottom: '1rem', padding: '0.5rem', borderRadius: '8px' }}
+        onChange={(event) => setInput(event.target.value)}
+        style={{ width: '100%', marginBottom: '16px', padding: '8px', borderRadius: '4px' }}
       />
-      <button 
-        onClick={handleOptimize} 
-        style={{ padding: '0.5rem 1rem', backgroundColor: '#6366f1', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-      >
+      <button onClick={handleOptimize} style={{ backgroundColor: '#007BFF', color: 'white', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}>
         Optimize
       </button>
-      {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
-      {output && (
-        <textarea
-          readOnly
-          value={output}
-          style={{ width: '100%', height: '150px', marginTop: '1rem', padding: '0.5rem', borderRadius: '8px' }}
-        />
-      )}
+      {error && <p style={{ color: 'red', marginTop: '16px' }}>{error}</p>}
+      {output && <textarea value={output} readOnly style={{ marginTop: '16px', width: '100%', padding: '8px', borderRadius: '4px' }} rows={10} />}
     </div>
   );
 };
