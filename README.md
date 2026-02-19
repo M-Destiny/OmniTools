@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# OmniTools
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+OmniTools is a collection of small, powerful tools for everyday tasks. The project is designed to be simple, fast, secure, and responsive across all devices.
 
-Currently, two official plugins are available:
+### **Features**
+- JSON tools: Optimize, pretty-print, validate.
+- Text tools: Convert cases, count words, clean text.
+- AI tools: Prompt runners and templates.
+- PDF tools: Page counting, extracting text (upcoming).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### **Live Demo**
+*   **[OmniTools Live](https://omnitools-psi.vercel.app)**
 
-## React Compiler
+### **Getting Started**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+#### Prerequisites
+Make sure you have the following installed:
+- Node.js
+- npm
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### Clone Repository
+```bash
+$ git clone https://github.com/M-Destiny/OmniTools.git
+$ cd OmniTools
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### Install Dependencies
+```bash
+$ npm install
 ```
+
+#### Run Locally
+```bash
+$ npm run dev
+```
+
+#### Build for Production
+```bash
+$ npm run build
+$ npm start
+```
+
+### **Contribution Guide**
+We welcome contributions to make this project an ultimate toolbox! Here's how:
+1. Fork this repository.
+2. Create a new branch: `git checkout -b feature-name`.
+3. Add your changes and commit: `git commit -m 'Add new feature'`.
+4. Push to your forked branch: `git push origin feature-name`.
+5. Create a Pull Request.
+
+### **Project Structure**
+```plaintext
+│
+├── src
+│   ├── tools            # Tool registry directory
+│   ├── pages            # React pages (Home, Tool Details)
+│   ├── components       # Reusable components (Navbar)
+│   ├── App.tsx          # Main entry-point
+│   └── index.tsx        # Rendering logic
+│
+├── public
+│   └── index.html       # HTML container
+│
+├── vite.config.ts       # Vite configuration file
+└── package.json         # Project dependencies & scripts
+```
+
+### **Roadmap**
+- Add real-time tool execution features.
+- Enable user authentication for Pro tools.
+- Add more tools (PDF tools and more AI integrations).
+
+---
+**Created by Destiny and Clawe 🐾**
