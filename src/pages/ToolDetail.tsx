@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { tools } from '../tools/registry';
 import Navbar from '../components/Navbar';
+import JSONOptimizer from '../tools/jsonOptimizer';
 
 const ToolDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +17,15 @@ const ToolDetail: React.FC = () => {
     );
   }
 
+  const renderTool = () => {
+    switch (tool.id) {
+      case 'json-optimizer':
+        return <JSONOptimizer />;
+      default:
+        return <p>Tool functionality is coming soon. Stay tuned!</p>;
+    }
+  };
+
   return (
     <div style={{ backgroundColor: '#0f172a', minHeight: '100vh', color: '#f1f5f9' }}>
       <Navbar />
@@ -25,7 +35,7 @@ const ToolDetail: React.FC = () => {
           <p style={{ fontSize: '1.2rem', color: '#94a3b8' }}>{tool.description}</p>
         </header>
         <section>
-          <p>Tool functionality is coming soon. Stay tuned!</p>
+          {renderTool()}
         </section>
       </main>
     </div>
