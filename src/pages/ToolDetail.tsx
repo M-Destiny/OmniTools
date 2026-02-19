@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { tools } from '../tools/registry';
 import Navbar from '../components/Navbar';
 import JSONOptimizer from '../tools/jsonOptimizer';
+import TextConverter from '../tools/textConverter';
+import WordCounter from '../tools/wordCounter';
 
 const ToolDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +23,10 @@ const ToolDetail: React.FC = () => {
     switch (tool.id) {
       case 'json-optimizer':
         return <JSONOptimizer />;
+      case 'text-converter':
+        return <TextConverter />;
+      case 'word-counter':
+        return <WordCounter />;
       default:
         return <p>Tool functionality is coming soon. Stay tuned!</p>;
     }
