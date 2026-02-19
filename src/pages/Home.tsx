@@ -56,7 +56,11 @@ const Home: React.FC = () => {
 
         <div className="tool-grid">
           {filteredTools.map(tool => (
-            <div key={tool.id} className="tool-card">
+            <div 
+              key={tool.id} 
+              className="tool-card" 
+              onClick={() => window.location.href = `#/tools/${tool.id}`}
+            >
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{tool.icon}</div>
               <h3 style={{ marginBottom: '0.5rem', fontSize: '1.25rem' }}>{tool.name}</h3>
               <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: '1.5' }}>{tool.description}</p>
