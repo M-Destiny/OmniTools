@@ -3,13 +3,19 @@ import React, { useState } from 'react';
 const formatAndDeduplicateJSON = (input: string): string => {
   try {
     const parsed = JSON.parse(input);
+    const seen = new Set();
     const deduplicated = JSON.stringify(
       parsed,
-      (key, value) =>
-        Array.isArray(value)
-          ? Array.from(new Set(value.map((item) => JSON.stringify(item)))).map((item) => JSON.parse(item))
-          : value,
-      2
+      (key, value) => {
+        if (Array.isArray(value)) {
+          return value.filter((item) => {
+            const serialized = JSON.stringify(item);
+            return seen.has(serialized) ? false : seen.add(serialized);
+          });
+        }
+        return value;
+      },
+      2 // Formatting spacing
     );
     return deduplicated;
   } catch (error) {
@@ -27,7 +33,7 @@ const JSONOptimizer: React.FC = () => {
       const result = formatAndDeduplicateJSON(input);
       setOutput(result);
       setError('');
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message);
       setOutput('');
     }
