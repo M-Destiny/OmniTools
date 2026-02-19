@@ -7,16 +7,10 @@ const convertTextCase = (input: string, mode: 'uppercase' | 'lowercase'): string
 const TextConverter: React.FC = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [error, setError] = useState('');
 
   const handleConversion = (mode: 'uppercase' | 'lowercase') => {
-    try {
-      setError('');
-      const result = convertTextCase(input, mode);
-      setOutput(result);
-    } catch (err: any) {
-      setError('An error occurred while converting text.');
-    }
+    const result = convertTextCase(input, mode);
+    setOutput(result);
   };
 
   return (
@@ -43,7 +37,6 @@ const TextConverter: React.FC = () => {
           Convert to lowercase
         </button>
       </div>
-      {error && <p style={{ color: 'red', marginTop: '8px' }}>{error}</p>}
       {output && (
         <textarea
           readOnly
