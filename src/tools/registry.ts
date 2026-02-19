@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface ToolMetadata {
   id: string;
   name: string;
