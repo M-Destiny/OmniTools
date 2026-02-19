@@ -4,26 +4,26 @@ const formatAndDeduplicateJSON = (input: string): string => {
   try {
     const parsed = JSON.parse(input);
     const seen = new Set();
-    const deduplicated = JSON.stringify(
-      parsed,
-      (key, value) => {
-        if (Array.isArray(value)) {
-          return value.filter((item: any) => {
-            const serialized = JSON.stringify(item);
-            if (!seen.has(serialized)) {
-              seen.add(serialized);
-              return true;
-            }
-            return false;
-          });
-        }
-        return value;
-      },
-      2 // Pretty print JSON
-    );
+
+    function dedupe(value: any): any {
+      if (Array.isArray(value)) {
+        return value.filter((item) => {
+          const serialized = JSON.stringify(item);
+          if (!seen.has(serialized)) {
+            seen.add(serialized);
+            return true;
+          }
+          return false;
+        });
+      }
+      return value;
+    }
+
+    const deduplicated = JSON.stringify(parsed, (key, value) => dedupe(value), 2);
+
     return deduplicated;
   } catch (error) {
-    return 'Invalid JSON syntax';
+    throw new Error('Invalid JSON syntax');
   }
 };
 
@@ -37,27 +37,35 @@ const JSONOptimizer: React.FC = () => {
       setError('');
       const result = formatAndDeduplicateJSON(input);
       setOutput(result);
-    } catch (err: any) {
-      setError('Could not process JSON. Please check your input.');
+    } catch (err) {
+      setError((err as Error).message);
       setOutput('');
     }
   };
 
   return (
-    <div style={{ padding: '16px', color: 'white' }}>
+    <div style={{ color: 'white', padding: '1rem' }}>
       <h2>JSON Optimizer</h2>
       <textarea
-        rows={10}
-        placeholder="Paste JSON here..."
+        placeholder="Enter your JSON here"
         value={input}
-        onChange={(event) => setInput(event.target.value)}
-        style={{ width: '100%', marginBottom: '16px', padding: '8px', borderRadius: '4px' }}
-      />
-      <button onClick={handleOptimize} style={{ backgroundColor: '#007BFF', color: 'white', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}>
-        Optimize
+        onChange={(e) => setInput(e.target.value)}
+        style={{ width: '100%', height: '150px', marginBottom: '1rem', padding: '0.5rem' }}
+      ></textarea>
+      <button
+        onClick={handleOptimize}
+        style={{ padding: '0.5rem', backgroundColor: '#007BFF', border: 'none', color: 'white', cursor: 'pointer', marginBottom: '1rem' }}
+      >
+        Optimize JSON
       </button>
-      {error && <p style={{ color: 'red', marginTop: '16px' }}>{error}</p>}
-      {output && <textarea value={output} readOnly style={{ marginTop: '16px', width: '100%', padding: '8px', borderRadius: '4px' }} rows={10} />}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {output && (
+        <textarea
+          readOnly
+          value={output}
+          style={{ width: '100%', height: '150px', padding: '0.5rem' }}
+        ></textarea>
+      )}
     </div>
   );
 };
