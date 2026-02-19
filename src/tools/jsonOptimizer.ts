@@ -32,11 +32,24 @@ const JSONOptimizer: React.FC = () => {
         placeholder="Paste your JSON here..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        style={{ width: '100%', height: '150px', marginBottom: '8px', padding: '8px', borderRadius: '4px' }}
+        style={{
+          width: '100%',
+          height: '150px',
+          marginBottom: '8px',
+          padding: '8px',
+          borderRadius: '4px',
+        }}
       ></textarea>
       <button
         onClick={handleOptimize}
-        style={{ backgroundColor: '#3B82F6', color: '#fff', padding: '8px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+        style={{
+          backgroundColor: '#3B82F6',
+          color: '#fff',
+          padding: '8px 16px',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
       >
         Optimize
       </button>
@@ -45,7 +58,13 @@ const JSONOptimizer: React.FC = () => {
         <textarea
           readOnly
           value={output}
-          style={{ width: '100%', height: '150px', marginTop: '8px', padding: '8px', borderRadius: '4px' }}
+          style={{
+            width: '100%',
+            height: '150px',
+            marginTop: '8px',
+            padding: '8px',
+            borderRadius: '4px',
+          }}
         ></textarea>
       )}
     </div>
