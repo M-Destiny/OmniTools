@@ -1,27 +1,9 @@
 import React, { useState } from 'react';
 
-const formatAndDeduplicateJSON = (input: string): string => {
+const formatAndValidateJSON = (input: string): string => {
   try {
     const parsed = JSON.parse(input);
-    const seen = new Set();
-
-    function dedupe(value: any): any {
-      if (Array.isArray(value)) {
-        return value.filter((item) => {
-          const serialized = JSON.stringify(item);
-          if (!seen.has(serialized)) {
-            seen.add(serialized);
-            return true;
-          }
-          return false;
-        });
-      }
-      return value;
-    }
-
-    const deduplicated = JSON.stringify(parsed, (key, value) => dedupe(value), 2);
-
-    return deduplicated;
+    return JSON.stringify(parsed, null, 2); // Format and validate only
   } catch (error) {
     throw new Error('Invalid JSON syntax');
   }
@@ -35,7 +17,7 @@ const JSONOptimizer: React.FC = () => {
   const handleOptimize = () => {
     try {
       setError('');
-      const result = formatAndDeduplicateJSON(input);
+      const result = formatAndValidateJSON(input);
       setOutput(result);
     } catch (err) {
       setError((err as Error).message);
@@ -56,7 +38,7 @@ const JSONOptimizer: React.FC = () => {
         onClick={handleOptimize}
         style={{ padding: '0.5rem', backgroundColor: '#007BFF', border: 'none', color: 'white', cursor: 'pointer', marginBottom: '1rem' }}
       >
-        Optimize JSON
+        Format JSON
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {output && (
