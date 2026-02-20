@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import FilePreview from '../components/FilePreview';
 // import { saveAs } from 'file-saver'; // Removed as not used directly
 
 const WordToPdfTool: React.FC = () => {
@@ -123,21 +124,15 @@ const WordToPdfTool: React.FC = () => {
       </div>
 
       {files.length > 0 && (
-        <div style={{ marginTop: '1.5rem' }}>
-          <h3>Files ({files.length}):</h3>
-          {files.map((file, index) => (
-            <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', backgroundColor: 'rgba(30, 41, 59, 0.8)', borderRadius: '8px', marginBottom: '0.5rem' }}>
-              <span>📝 {file.name}</span>
-              <button onClick={() => removeFile(index)} style={{ backgroundColor: '#ef4444', border: 'none', borderRadius: '4px', padding: '0.25rem 0.5rem', cursor: 'pointer' }}>✕</button>
-            </div>
-          ))}
+        <>
+          <FilePreview files={files} onRemove={removeFile} />
 
           {error && <p style={{ color: '#ef4444' }}>{error}</p>}
 
           <button onClick={convertToPdf} disabled={converting} style={{ width: '100%', padding: '0.875rem', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '8px', marginTop: '1rem' }}>
             {converting ? '⏳ Converting...' : `📄 Convert ${files.length} to PDF`}
           </button>
-        </div>
+        </>
       )}
     </div>
   );

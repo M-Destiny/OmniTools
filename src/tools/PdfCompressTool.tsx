@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { PDFDocument } from 'pdf-lib';
+import FilePreview from '../components/FilePreview';
 
 const PdfCompressTool: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -68,16 +69,20 @@ const PdfCompressTool: React.FC = () => {
       </div>
 
       {file && (
-        <div style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: 'rgba(30, 41, 59, 0.8)', borderRadius: '8px' }}>
-          <p>📄 {file.name}</p>
-          <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Original size: {(file.size / 1024).toFixed(1)} KB</p>
+        <>
+          <FilePreview files={[file]} onRemove={() => setFile(null)} />
+          
+          <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: 'rgba(30, 41, 59, 0.8)', borderRadius: '8px' }}>
+            <p>📄 {file.name}</p>
+            <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Original size: {(file.size / 1024).toFixed(1)} KB</p>
 
-          {error && <p style={{ color: '#ef4444' }}>{error}</p>}
+            {error && <p style={{ color: '#ef4444' }}>{error}</p>}
 
-          <button onClick={compressPdf} disabled={compressing} style={{ width: '100%', padding: '0.875rem', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '8px', marginTop: '1rem' }}>
-            {compressing ? '⏳ Compressing...' : '📉 Compress PDF'}
-          </button>
-        </div>
+            <button onClick={compressPdf} disabled={compressing} style={{ width: '100%', padding: '0.875rem', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '8px', marginTop: '1rem' }}>
+              {compressing ? '⏳ Compressing...' : '📉 Compress PDF'}
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

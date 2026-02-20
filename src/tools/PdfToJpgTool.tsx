@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import FilePreview from '../components/FilePreview';
 
 const PdfToJpgTool: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -102,15 +103,17 @@ const PdfToJpgTool: React.FC = () => {
       </div>
 
       {file && (
-        <div style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: 'rgba(30, 41, 59, 0.8)', borderRadius: '8px' }}>
-          <p>📄 {file.name}</p>
+        <>
+          <FilePreview files={[file]} onRemove={() => setFile(null)} />
+          
+          <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: 'rgba(30, 41, 59, 0.8)', borderRadius: '8px' }}>
+            {error && <p style={{ color: '#ef4444' }}>{error}</p>}
 
-          {error && <p style={{ color: '#ef4444' }}>{error}</p>}
-
-          <button onClick={convertToJpg} disabled={converting} style={{ width: '100%', padding: '0.875rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '8px', marginTop: '1rem' }}>
-            {converting ? '⏳ Converting...' : '🖼️ Convert to JPG'}
-          </button>
-        </div>
+            <button onClick={convertToJpg} disabled={converting} style={{ width: '100%', padding: '0.875rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '8px', marginTop: '1rem' }}>
+              {converting ? '⏳ Converting...' : '🖼️ Convert to JPG'}
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

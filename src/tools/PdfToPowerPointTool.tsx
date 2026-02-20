@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import FilePreview from '../components/FilePreview';
 
 const PdfToPowerPointTool: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -87,15 +88,17 @@ const PdfToPowerPointTool: React.FC = () => {
       </div>
 
       {file && (
-        <div style={{ marginTop: '1.5rem' }}>
-          <p>📄 {file.name}</p>
-
-          {error && <p style={{ color: '#ef4444' }}>{error}</p>}
+        <>
+          <FilePreview files={[file]} onRemove={() => setFile(null)} />
+          
+          <div style={{ marginTop: '1rem' }}>
+            {error && <p style={{ color: '#ef4444' }}>{error}</p>}
 
           <button onClick={convertToPowerPoint} disabled={converting} style={{ width: '100%', padding: '0.875rem', backgroundColor: '#f59e0b', color: 'white', border: 'none', borderRadius: '8px', marginTop: '1rem' }}>
             {converting ? '⏳ Converting...' : '🎬 Convert to PPTX'}
           </button>
-        </div>
+          </div>
+        </>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { PDFDocument, PageSizes } from 'pdf-lib';
+import FilePreview from '../components/FilePreview';
 
 const JpgToPdfTool: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -133,25 +134,15 @@ const JpgToPdfTool: React.FC = () => {
       </div>
 
       {files.length > 0 && (
-        <div style={{ marginTop: '1.5rem' }}>
-          <h3>Images ({files.length}):</h3>
-          {files.map((file, index) => (
-            <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '0.75rem', backgroundColor: 'rgba(30, 41, 59, 0.8)', borderRadius: '8px', marginBottom: '0.5rem' }}>
-              <span style={{ flex: 1 }}>{file.name}</span>
-              <div style={{ display: 'flex', gap: '0.25rem' }}>
-                <button onClick={() => moveFile(index, 'up')} disabled={index === 0}>↑</button>
-                <button onClick={() => moveFile(index, 'down')} disabled={index === files.length - 1}>↓</button>
-                <button onClick={() => removeFile(index)} style={{ backgroundColor: '#ef4444' }}>✕</button>
-              </div>
-            </div>
-          ))}
+        <>
+          <FilePreview files={files} onRemove={removeFile} onReorder={moveFile} />
 
           {error && <p style={{ color: '#ef4444' }}>{error}</p>}
 
           <button onClick={convertToPdf} disabled={converting} style={{ width: '100%', padding: '0.875rem', backgroundColor: '#ec4899', color: 'white', border: 'none', borderRadius: '8px', marginTop: '1rem' }}>
             {converting ? '⏳ Converting...' : `📷 Convert ${files.length} Images to PDF`}
           </button>
-        </div>
+        </>
       )}
     </div>
   );
