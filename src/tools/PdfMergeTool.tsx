@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { PDFDocument } from 'pdf-lib';
+import FilePreview from '../components/FilePreview';
 
 const PdfMergeTool: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -110,77 +111,12 @@ const PdfMergeTool: React.FC = () => {
       </div>
 
       {files.length > 0 && (
-        <div style={{ marginTop: '1.5rem' }}>
-          <h3 style={{ marginBottom: '0.75rem' }}>Files to merge ({files.length}):</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {files.map((file, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '0.75rem 1rem',
-                  backgroundColor: 'rgba(30, 41, 59, 0.8)',
-                  borderRadius: '8px',
-                  border: '1px solid #334155',
-                }}
-              >
-                <span style={{ flex: 1, fontSize: '0.9rem' }}>
-                  <span style={{ marginRight: '0.5rem' }}>📄</span>
-                  {file.name}
-                  <span style={{ color: '#64748b', marginLeft: '0.5rem', fontSize: '0.8rem' }}>
-                    ({(file.size / 1024).toFixed(1)} KB)
-                  </span>
-                </span>
-                <div style={{ display: 'flex', gap: '0.25rem' }}>
-                  <button
-                    onClick={() => moveFile(index, 'up')}
-                    disabled={index === 0}
-                    style={{
-                      padding: '0.25rem 0.5rem',
-                      backgroundColor: index === 0 ? '#334155' : '#475569',
-                      border: 'none',
-                      borderRadius: '4px',
-                      cursor: index === 0 ? 'default' : 'pointer',
-                      opacity: index === 0 ? 0.5 : 1,
-                      fontSize: '0.9rem',
-                    }}
-                  >
-                    ↑
-                  </button>
-                  <button
-                    onClick={() => moveFile(index, 'down')}
-                    disabled={index === files.length - 1}
-                    style={{
-                      padding: '0.25rem 0.5rem',
-                      backgroundColor: index === files.length - 1 ? '#334155' : '#475569',
-                      border: 'none',
-                      borderRadius: '4px',
-                      cursor: index === files.length - 1 ? 'default' : 'pointer',
-                      opacity: index === files.length - 1 ? 0.5 : 1,
-                      fontSize: '0.9rem',
-                    }}
-                  >
-                    ↓
-                  </button>
-                  <button
-                    onClick={() => removeFile(index)}
-                    style={{
-                      padding: '0.25rem 0.75rem',
-                      backgroundColor: '#ef4444',
-                      border: 'none',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      marginLeft: '0.5rem',
-                      fontSize: '0.9rem',
-                    }}
-                  >
-                    ✕
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+        <>
+          <FilePreview 
+            files={files} 
+            onRemove={removeFile}
+            onReorder={moveFile}
+          />
 
           {error && (
             <p style={{ color: '#ef4444', marginTop: '1rem', fontSize: '0.9rem' }}>{error}</p>
@@ -206,7 +142,7 @@ const PdfMergeTool: React.FC = () => {
           >
             {merging ? '⏳ Merging...' : `🔗 Merge ${files.length} PDFs`}
           </button>
-        </div>
+        </>
       )}
     </div>
   );

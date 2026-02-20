@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import FilePreview from '../components/FilePreview';
 
 const ImageCompressTool: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -104,21 +105,15 @@ const ImageCompressTool: React.FC = () => {
       </div>
 
       {files.length > 0 && (
-        <div style={{ marginTop: '1.5rem' }}>
-          <h3>Files ({files.length}):</h3>
-          {files.map((file, index) => (
-            <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', backgroundColor: 'rgba(30, 41, 59, 0.8)', borderRadius: '8px', marginBottom: '0.5rem' }}>
-              <span>{file.name} ({(file.size / 1024).toFixed(1)} KB)</span>
-              <button onClick={() => removeFile(index)} style={{ backgroundColor: '#ef4444', border: 'none', borderRadius: '4px', padding: '0.25rem 0.5rem', cursor: 'pointer' }}>✕</button>
-            </div>
-          ))}
+        <>
+          <FilePreview files={files} onRemove={removeFile} />
 
-          {error && <p style={{ color: '#ef4444' }}>{error}</p>}
+          {error && <p style={{ color: '#ef4444', marginTop: '1rem' }}>{error}</p>}
 
           <button onClick={compressAll} disabled={compressing} style={{ width: '100%', padding: '0.875rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '8px', marginTop: '1rem' }}>
             {compressing ? '⏳ Compressing...' : `🗜️ Compress ${files.length} Image(s)`}
           </button>
-        </div>
+        </>
       )}
     </div>
   );
