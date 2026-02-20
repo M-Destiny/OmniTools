@@ -5,6 +5,8 @@ import Navbar from '../components/Navbar';
 import JSONOptimizer from '../tools/jsonOptimizer';
 import TextConverter from '../tools/textConverter';
 import WordCounter from '../tools/wordCounter';
+import PdfMergeTool from '../tools/PdfMergeTool';
+import PhotosToPdfTool from '../tools/PhotosToPdfTool';
 
 const ToolDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,6 +29,10 @@ const ToolDetail: React.FC = () => {
         return <TextConverter />;
       case 'word-counter':
         return <WordCounter />;
+      case 'pdf-merge':
+        return <PdfMergeTool />;
+      case 'photos-to-pdf':
+        return <PhotosToPdfTool />;
       default:
         return <p>Tool functionality is coming soon. Stay tuned!</p>;
     }

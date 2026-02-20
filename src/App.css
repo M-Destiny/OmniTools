@@ -47,7 +47,7 @@ body {
 .tool-card {
   background-color: #1e293b;
   padding: 1.5rem;
-  borderRadius: 12px;
+  border-radius: 12px;
   border: 1px solid #334155;
   transition: all 0.2s ease-in-out;
   cursor: pointer;

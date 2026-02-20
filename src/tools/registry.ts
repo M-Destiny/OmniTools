@@ -6,6 +6,8 @@ export interface ToolMetadata {
   icon: string;
 }
 
+export type ToolCategory = 'json' | 'text' | 'pdf' | 'ai';
+
 export const tools: ToolMetadata[] = [
   {
     id: 'json-optimizer',
@@ -27,5 +29,19 @@ export const tools: ToolMetadata[] = [
     description: 'Detailed analysis of text length and word count.',
     category: 'text',
     icon: '📊'
+  },
+  {
+    id: 'pdf-merge',
+    name: 'PDF Merge Tool',
+    description: 'Combine multiple PDF files into a single document.',
+    category: 'pdf',
+    icon: '📑'
+  },
+  {
+    id: 'photos-to-pdf',
+    name: 'Photos to PDF',
+    description: 'Convert images (JPG, PNG) into a PDF document.',
+    category: 'pdf',
+    icon: '🖼️'
   }
 ];
