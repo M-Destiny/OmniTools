@@ -2,10 +2,24 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { tools } from '../tools/registry';
 import Navbar from '../components/Navbar';
+
+// Import all tools
 import JSONOptimizer from '../tools/jsonOptimizer';
 import TextConverter from '../tools/textConverter';
 import WordCounter from '../tools/wordCounter';
+import ImageCompressTool from '../tools/ImageCompressTool';
 import PdfMergeTool from '../tools/PdfMergeTool';
+import PdfCompressTool from '../tools/PdfCompressTool';
+import PdfToWordTool from '../tools/PdfToWordTool';
+import WordToPdfTool from '../tools/WordToPdfTool';
+import PdfToExcelTool from '../tools/PdfToExcelTool';
+import ExcelToPdfTool from '../tools/ExcelToPdfTool';
+import PdfToPowerPointTool from '../tools/PdfToPowerPointTool';
+import PowerPointToPdfTool from '../tools/PowerPointToPdfTool';
+import PdfToJpgTool from '../tools/PdfToJpgTool';
+import JpgToPdfTool from '../tools/JpgToPdfTool';
+import PdfSignTool from '../tools/PdfSignTool';
+import PdfWatermarkTool from '../tools/PdfWatermarkTool';
 import PhotosToPdfTool from '../tools/PhotosToPdfTool';
 
 const ToolDetail: React.FC = () => {
@@ -29,8 +43,32 @@ const ToolDetail: React.FC = () => {
         return <TextConverter />;
       case 'word-counter':
         return <WordCounter />;
+      case 'image-compress':
+        return <ImageCompressTool />;
       case 'pdf-merge':
         return <PdfMergeTool />;
+      case 'pdf-compress':
+        return <PdfCompressTool />;
+      case 'pdf-to-word':
+        return <PdfToWordTool />;
+      case 'word-to-pdf':
+        return <WordToPdfTool />;
+      case 'pdf-to-excel':
+        return <PdfToExcelTool />;
+      case 'excel-to-pdf':
+        return <ExcelToPdfTool />;
+      case 'pdf-to-powerpoint':
+        return <PdfToPowerPointTool />;
+      case 'powerpoint-to-pdf':
+        return <PowerPointToPdfTool />;
+      case 'pdf-to-jpg':
+        return <PdfToJpgTool />;
+      case 'jpg-to-pdf':
+        return <JpgToPdfTool />;
+      case 'pdf-sign':
+        return <PdfSignTool />;
+      case 'pdf-watermark':
+        return <PdfWatermarkTool />;
       case 'photos-to-pdf':
         return <PhotosToPdfTool />;
       default:
