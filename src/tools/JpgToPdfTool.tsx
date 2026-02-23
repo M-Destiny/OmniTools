@@ -41,8 +41,33 @@ const JpgToPdfTool: React.FC = () => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve(img);
-      img.onerror = reject;
+      img.onerror = () => reject(new Error(`Failed to load image: ${file.name}`));
       img.src = URL.createObjectURL(file);
+    });
+  };
+
+  // Convert image to JPEG bytes via canvas to ensure proper format
+  const imageToJpegBytes = (img: HTMLImageElement): Promise<Uint8Array> => {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('Failed to get canvas context'));
+        return;
+      }
+      
+      // Draw image to canvas (converts any format to standard)
+      ctx.drawImage(img, 0, 0);
+      
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          reject(new Error('Failed to convert image to JPEG'));
+          return;
+        }
+        blob.arrayBuffer().then(buffer => resolve(new Uint8Array(buffer)));
+      }, 'image/jpeg', 0.92);
     });
   };
 
@@ -76,8 +101,9 @@ const JpgToPdfTool: React.FC = () => {
         const x = (pageWidth - scaledWidth) / 2;
         const y = (pageHeight - scaledHeight) / 2;
 
-        const bytes = await file.arrayBuffer();
-        const image = await pdfDoc.embedJpg(bytes);
+        // Convert image to proper JPEG bytes via canvas
+        const jpegBytes = await imageToJpegBytes(img);
+        const image = await pdfDoc.embedJpg(jpegBytes);
         
         page.drawImage(image, { x, y, width: scaledWidth, height: scaledHeight });
       }

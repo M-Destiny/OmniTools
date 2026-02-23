@@ -1,8 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { PDFDocument } from 'pdf-lib';
+import * as pdfjsLib from 'pdfjs-dist';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import FilePreview from '../components/FilePreview';
+
+// Configure pdf.js worker - use local worker from node_modules
+pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).toString();
 
 const PdfToJpgTool: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -29,35 +35,43 @@ const PdfToJpgTool: React.FC = () => {
 
     try {
       const arrayBuffer = await file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
-      const pages = pdfDoc.getPages();
+      
+      // Load PDF with pdf.js for rendering
+      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+      const pdfDoc = await loadingTask.promise;
+      const numPages = pdfDoc.numPages;
       const zip = new JSZip();
       
-      // Convert each page to image via canvas
-      for (let i = 0; i < pages.length; i++) {
-        const page = pages[i];
-        const { width, height } = page.getSize();
+      // Convert each page to image via canvas using pdf.js
+      for (let i = 1; i <= numPages; i++) {
+        const page = await pdfDoc.getPage(i);
+        const viewport = page.getViewport({ scale: dpi / 72 });
         
         // Create canvas for rendering
         const canvas = document.createElement('canvas');
-        const scale = dpi / 72;
-        canvas.width = width * scale;
-        canvas.height = height * scale;
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
         const ctx = canvas.getContext('2d')!;
         
         // Fill white background
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // For PDF pages, we'd need pdf.js for proper rendering
-        // This is a simplified approach - in production, use pdf.js
-        ctx.fillStyle = '#333';
-        ctx.font = '20px Arial';
-        ctx.fillText(`Page ${i + 1} - PDF content would render here`, 50, 100);
+        // Render PDF page to canvas
+        await page.render({ 
+          canvasContext: ctx, 
+          viewport: viewport,
+          canvas: canvas
+        } as any).promise;
         
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
-        const base64Data = dataUrl.split(',')[1];
-        zip.file(`page_${String(i + 1).padStart(3, '0')}.jpg`, base64Data, { base64: true });
+        // Convert canvas to JPEG blob
+        const blob = await new Promise<Blob>((resolve) => {
+          canvas.toBlob((b) => resolve(b!), 'image/jpeg', 0.9);
+        });
+        
+        // Add to zip
+        const arrayBufferResult = await blob.arrayBuffer();
+        zip.file(`page_${String(i).padStart(3, '0')}.jpg`, arrayBufferResult);
       }
 
       const content = await zip.generateAsync({ type: 'blob' });
