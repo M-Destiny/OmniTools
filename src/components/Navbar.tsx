@@ -6,20 +6,25 @@ const Navbar: React.FC = () => {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '1rem',
-      backgroundColor: '#1e293b',
-      borderBottom: '1px solid #334155',
-      color: '#f1f5f9',
+      padding: '1rem 2rem',
+      backgroundColor: 'var(--bg-card)',
+      borderBottom: '1px solid var(--border-color)',
+      color: 'var(--text-primary)',
       position: 'sticky',
       top: 0,
-      zIndex: 50
+      zIndex: 50,
+      backdropFilter: 'blur(10px)'
     }}>
-      <div style={{ fontSize: '1.25rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        <span>OmniTools</span>
+      <div style={{ fontSize: '1.35rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <span style={{ 
+          background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))', 
+          WebkitBackgroundClip: 'text', 
+          WebkitTextFillColor: 'transparent' 
+        }}>OmniTools</span>
       </div>
-      <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem' }}>
-        <a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Tools</a>
-        <a href="#" style={{ color: '#6366f1', textDecoration: 'none', fontWeight: 'bold' }}>Pro</a>
+      <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.95rem' }}>
+        <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color 0.2s' }}>Tools</a>
+        <a href="#" style={{ color: 'var(--color-highlight)', textDecoration: 'none', fontWeight: 600 }}>Pro</a>
       </div>
     </nav>
   );

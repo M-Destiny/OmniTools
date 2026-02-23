@@ -29,7 +29,7 @@ const ToolDetail: React.FC = () => {
 
   if (!tool) {
     return (
-      <div style={{ color: 'white', textAlign: 'center', margin: '2rem' }}>
+      <div style={{ backgroundColor: 'var(--bg-main)', minHeight: '100vh', color: 'var(--text-primary)', textAlign: 'center', margin: '2rem' }}>
         <h1>Tool Not Found</h1>
         <p>We couldn't find the tool you were looking for.</p>
       </div>
@@ -75,17 +75,25 @@ const ToolDetail: React.FC = () => {
       case 'photos-to-pdf':
         return <PhotosToPdfTool />;
       default:
-        return <p>Tool functionality is coming soon. Stay tuned!</p>;
+        return <p style={{ color: 'var(--text-secondary)' }}>Tool functionality is coming soon. Stay tuned!</p>;
     }
   };
 
   return (
-    <div style={{ backgroundColor: '#0f172a', minHeight: '100vh', color: '#f1f5f9' }}>
+    <div style={{ backgroundColor: 'var(--bg-main)', minHeight: '100vh', color: 'var(--text-primary)' }}>
       <Navbar />
-      <main style={{ padding: '2rem 1rem', maxWidth: '800px', margin: '0 auto' }}>
-        <header style={{ marginBottom: '3rem' }}>
-          <h1 style={{ fontSize: '2.5rem' }}>{tool.icon} {tool.name}</h1>
-          <p style={{ fontSize: '1.2rem', color: '#94a3b8' }}>{tool.description}</p>
+      <main style={{ padding: '2rem 1rem', maxWidth: '900px', margin: '0 auto' }}>
+        <header style={{ marginBottom: '2.5rem' }}>
+          <h1 style={{ 
+            fontSize: '2.5rem',
+            background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            marginBottom: '0.5rem'
+          }}>
+            {tool.icon} {tool.name}
+          </h1>
+          <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)' }}>{tool.description}</p>
         </header>
         <section>
           {renderTool()}

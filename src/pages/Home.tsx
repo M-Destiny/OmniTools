@@ -14,14 +14,21 @@ const Home: React.FC = () => {
   });
 
   return (
-    <div className="home-container" style={{ backgroundColor: '#0f172a', minHeight: '100vh', color: '#f1f5f9' }}>
+    <div style={{ backgroundColor: 'var(--bg-main)', minHeight: '100vh', color: 'var(--text-primary)' }}>
       <Navbar />
       <main style={{ padding: '2rem 1rem', maxWidth: '1200px', margin: '0 auto' }}>
         <header style={{ marginBottom: '3rem', textAlign: 'center' }}>
-          <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 'bold', marginBottom: '1rem' }}>
+          <h1 style={{ 
+            fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', 
+            fontWeight: 'bold', 
+            marginBottom: '1rem',
+            background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
             Small Tools, Big Impact
           </h1>
-          <p style={{ color: '#94a3b8', fontSize: 'clamp(0.9rem, 3vw, 1.1rem)', maxWidth: '600px', margin: '0 auto' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(0.9rem, 3vw, 1.1rem)', maxWidth: '600px', margin: '0 auto' }}>
             Simple, fast, and secure tools for your daily tasks.
           </p>
         </header>
@@ -62,8 +69,8 @@ const Home: React.FC = () => {
               onClick={() => window.location.href = `#/tools/${tool.id}`}
             >
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{tool.icon}</div>
-              <h3 style={{ marginBottom: '0.5rem', fontSize: '1.25rem' }}>{tool.name}</h3>
-              <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: '1.5' }}>{tool.description}</p>
+              <h3 style={{ marginBottom: '0.5rem', fontSize: '1.25rem', color: 'var(--text-primary)' }}>{tool.name}</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5' }}>{tool.description}</p>
             </div>
           ))}
         </div>
