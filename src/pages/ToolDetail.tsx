@@ -21,6 +21,7 @@ import JpgToPdfTool from '../tools/JpgToPdfTool';
 import PdfSignTool from '../tools/PdfSignTool';
 import PdfWatermarkTool from '../tools/PdfWatermarkTool';
 import PhotosToPdfTool from '../tools/PhotosToPdfTool';
+import PdfEditorTool from '../tools/PdfEditorTool';
 
 const ToolDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -67,6 +68,8 @@ const ToolDetail: React.FC = () => {
         return <JpgToPdfTool />;
       case 'pdf-sign':
         return <PdfSignTool />;
+      case 'pdf-editor':
+        return <PdfEditorTool />;
       case 'pdf-watermark':
         return <PdfWatermarkTool />;
       case 'photos-to-pdf':

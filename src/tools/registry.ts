@@ -115,6 +115,13 @@ export const tools: ToolMetadata[] = [
     icon: '✍️'
   },
   {
+    id: 'pdf-editor',
+    name: 'PDF Editor',
+    description: 'Edit PDF text, add new text, change fonts, colors, and positioning.',
+    category: 'pdf',
+    icon: '📝'
+  },
+  {
     id: 'pdf-watermark',
     name: 'PDF Watermark',
     description: 'Add text or image watermarks to PDF documents.',
